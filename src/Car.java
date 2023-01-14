@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 public class Car {
@@ -21,6 +22,7 @@ public class Car {
     public double stopTime = 0;
     public Color color;
     public ArrayList<Block> blocks;
+    public ArrayList<Car> cars;
 
     public Car(double blockX, double blockY, double v, double width, double height, Path path, Block block, ArrayList<Block> blocks) {
         BlockX = blockX;
@@ -88,8 +90,21 @@ public class Car {
 
     public void update() {
         if (inPath) {
+            for (Car car : cars) {
+                if (!(car.equals(this))) {
+                    if (this.check(car)) {
+                        System.out.println("Intersect");
+                        if (this.atRight(car)) {
+                            this.stop();
+                        } else {
+                            this.move();
+                        }
+                    } else {
+                        this.move();
+                    }
+                }
+            }
             if (inMotion) {
-                stopTime = 0;
                 double nextX = path.getXs().get(PathPosition);
                 double nextY = path.getYs().get(PathPosition);
 //                System.out.println(nextX + " " + nextY);
@@ -111,7 +126,7 @@ public class Car {
 
                 BlockX += vx * Constants.tick;
                 BlockY += vy * Constants.tick;
-                System.out.println(BlockX + " " + BlockY + "\n");
+//                System.out.println(BlockX + " " + BlockY + "\n");
             }
 
         } else {
@@ -119,12 +134,31 @@ public class Car {
         }
     }
 
-    public boolean atRight(Car car){
-        double futureX = BlockX + Constants.check * vx;
-        double futureY = BlockY + Constants.check * vy;
-        return true;
-    }
+    public boolean check(Car car){
+        if (car.block.equals(this.block)){
+//            System.out.println(true);
+            double futureX = x + Constants.check * vx;
+            double futureY = y + Constants.check * vy;
+            double futureX1 = car.x + Constants.check * car.vx;
+            double futureY1 = car.y + Constants.check * car.vy;
+            Rectangle a = new Rectangle(x, y, futureX + 1, futureY + 1);
+            Rectangle b = new Rectangle(car.x, car.y, futureX1 + 1, futureY1 + 1);
+            System.out.println(x + " " + y + "  " + futureX + " " + futureY + "   " + car.x + " " + car.y + "  " + futureX1 + " " + futureY1 + "\n" );
+            if (a.isIntersects(b)){
+                System.out.println(true);
+            }
+            return a.isIntersects(b);
 
+        }
+        else {
+            return false;
+        }
+    }
+    public boolean atRight(Car car){
+        Vector3D a = new Vector3D(Constants.check * vx, Constants.check * vy, 0);
+        Vector3D b = new Vector3D(Constants.check * car.vx, Constants.check * car.vy, 0);
+        return (a.right(b));
+    }
 
     public void stop() {
         inMotion = false;

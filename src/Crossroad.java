@@ -20,7 +20,7 @@ public class Crossroad extends Block{
         Path pathRD = new Path(new ArrayList<>(List.of(width, x1, x1)), new ArrayList<>(List.of(y1, y1, height)));
         Path pathUL = new Path(new ArrayList<>(List.of(x1, x1, 0.0)), new ArrayList<>(List.of(0.0, y1, y1)));
         Path pathUR = new Path(new ArrayList<>(List.of(x1, x1, width)), new ArrayList<>(List.of(0.0, y2, y2)));
-        Path pathDL = new Path(new ArrayList<>(List.of(x1, x1, 0.0)), new ArrayList<>(List.of(height, y2, y2)));
+        Path pathDL = new Path(new ArrayList<>(List.of(x2, x2, 0.0)), new ArrayList<>(List.of(height, y1, y1)));
         Path pathDR = new Path(new ArrayList<>(List.of(x1, x1, width)), new ArrayList<>(List.of(height, y2, y2)), Color.red);
         ArrayList<Path> paths = new ArrayList<>(List.of(pathLR, pathRL, pathUD, pathDU, pathLD, pathLU, pathRU, pathRD, pathUL, pathUR, pathDL, pathDR));
         super.paths = paths;

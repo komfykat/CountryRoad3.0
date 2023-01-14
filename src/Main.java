@@ -6,7 +6,7 @@ import java.util.Random;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
-        Random r = new Random(11111);
+        Random r = new Random(111);
 //        LRBlock block1 = new LRBlock(100, 0, 100, 100);
 //        LRBlock block2 = new LRBlock(200, 0, 100, 100);
 //        LDBlock block3 = new LDBlock(300, 0, 100, 100);
@@ -29,6 +29,8 @@ public class Main {
         Car car = new Car(crossroad.paths.get(i).getXs().get(0), crossroad.paths.get(i).getYs().get(0), 30, 10, 10, crossroad.paths.get(i), crossroad, blocks);
         Car car1 = new Car(crossroad.paths.get(j).getXs().get(0), crossroad.paths.get(j).getYs().get(0), 30, 10, 10, crossroad.paths.get(j), crossroad, blocks);
         ArrayList<Car> cars = new ArrayList<>(List.of(car, car1));
+        car.cars = cars;
+        car1.cars = cars;
         JFrame frame = new JFrame();
         frame.setSize(1920, 1080);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
